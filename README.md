@@ -6,7 +6,7 @@ of Mediawiki plugins using composer.
 * `docker-compose up`
 * Visit http://localhost:8080
 
-The database credentials are: db `wiki`, username `wiki`, password `wiki`. Once
+The database credentials are: host `db`, db `wiki`, username `wiki`, password `wiki`. Once
 you've created a config file, put it in `./data/config`.
 
 ## Updating
