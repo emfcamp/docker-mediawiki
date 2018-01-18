@@ -1,0 +1,9 @@
+{
+    "require": {
+        "mediawiki/sub-page-list": "1.5.*",
+        "mediawiki/semantic-media-wiki": "2.5.*",
+        "mediawiki/page-forms": "4.2.*",
+        "mediawiki/maps": "5.1.*",
+        "mediawiki/semantic-forms-select": "2.1.*"
+    }
+}
