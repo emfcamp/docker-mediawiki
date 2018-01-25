@@ -28,4 +28,5 @@ $wgArticlePath      = "/wiki/$1";
 $wgUsePathInfo = true;
 ```
 
-Note that short URLs don't currently work if the wiki is exposed as a subdirectory.
+Note that short URLs don't currently work if the wiki is exposed as a subdirectory -
+in this case omit `$wgArticlePath`.
