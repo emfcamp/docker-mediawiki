@@ -17,3 +17,15 @@ If a mediawiki DB needs an upgrade:
 
 Note that if the wiki is in read-only mode, you'll have to disable that, or you'll
 get a cryptic error.
+
+## Config
+
+For short URLs, the appropriate config is:
+
+```
+$wgScriptPath = "/w";
+$wgArticlePath      = "/wiki/$1";
+$wgUsePathInfo = true;
+```
+
+Note that short URLs don't currently work if the wiki is exposed as a subdirectory.
