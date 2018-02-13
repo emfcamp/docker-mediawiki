@@ -4,6 +4,8 @@
         "mediawiki/semantic-media-wiki": "2.5.*",
         "mediawiki/page-forms": "4.2.*",
         "mediawiki/maps": "5.1.*",
-        "mediawiki/semantic-forms-select": "2.1.*"
+        "mediawiki/semantic-forms-select": "2.1.*",
+        "pear/mail": "1.4.*",
+        "pear/net_smtp": "*"
     }
 }

@@ -19,6 +19,7 @@ Note that if the wiki is in read-only mode, you'll have to disable that, or you'
 get a cryptic error.
 
 ## Config
+### Short URLs
 
 For short URLs, the appropriate config is:
 
@@ -30,4 +31,20 @@ $wgUsePathInfo = true;
 
 Note that short URLs don't currently work if the wiki is exposed as a subdirectory -
 in this case omit `$wgArticlePath`.
+
+### Email
+
+To send emails, you need to set `$wgSMTP`:
+
+```
+$wgSMTP = array(
+ 'host'     => "smtp.host",
+ 'IDHost'   => "external.domain",
+ 'port'     => 25,
+ 'auth'     => false,
+);
+```
+
+To use the host machine, set `host` to either its FQDN or the default gateway of
+the container. `IDHost` should match the hostname used in `$wgServer`.
 
