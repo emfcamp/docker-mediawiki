@@ -1,18 +1,19 @@
-FROM php:7.0-fpm
+FROM php:7.4-fpm
 
 RUN apt-get update && \
     apt-get -y install apt-transport-https git curl libmagickwand-6.q16-dev imagemagick libicu-dev \
-               libpq-dev supervisor nginx cron
+               libpq-dev supervisor nginx cron libzip-dev gpg && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-install pgsql intl zip
-RUN pecl install imagick && docker-php-ext-enable imagick
-RUN pecl install apcu && \
-    pecl install apcu_bc-1.0.3 && \
-    docker-php-ext-enable apcu --ini-name 10-docker-php-ext-apcu.ini && \
-    docker-php-ext-enable apc --ini-name 20-docker-php-ext-apc.ini
+RUN docker-php-ext-install pgsql intl zip && \
+	pecl install imagick && docker-php-ext-enable imagick && \
+	pecl install apcu && \
+    	pecl install apcu_bc-1.0.5 && \
+    	docker-php-ext-enable apcu --ini-name 10-docker-php-ext-apcu.ini && \
+    	docker-php-ext-enable apc --ini-name 20-docker-php-ext-apc.ini
 
-ARG MEDIAWIKI_VERSION_MAJOR=1.30
-ARG MEDIAWIKI_VERSION=1.30.0
+ARG MEDIAWIKI_VERSION_MAJOR=1.34
+ARG MEDIAWIKI_VERSION=1.34.0
 
 RUN curl -s -o /tmp/keys.txt https://www.mediawiki.org/keys/keys.txt && \
     curl -s -o /tmp/mediawiki.tar.gz https://releases.wikimedia.org/mediawiki/$MEDIAWIKI_VERSION_MAJOR/mediawiki-$MEDIAWIKI_VERSION.tar.gz && \
@@ -31,8 +32,6 @@ RUN curl -s -o /tmp/keys.txt https://www.mediawiki.org/keys/keys.txt && \
 RUN curl -s -o /var/www/mediawiki/w/composer.phar https://getcomposer.org/composer.phar
 COPY config/composer.local.json /var/www/mediawiki/w/composer.local.json
 RUN cd /var/www/mediawiki/w; php ./composer.phar update --no-dev
-
-RUN apt-get clean; rm -r /var/lib/apt/lists/*
 
 COPY config/php-fpm.conf /usr/local/etc/
 COPY config/supervisord.conf /etc/supervisord.conf

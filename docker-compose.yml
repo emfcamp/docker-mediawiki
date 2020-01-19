@@ -7,7 +7,7 @@ services:
       - ./data/images:/images
       - ./data/config:/config
     ports:
-      - 8080:80
+      - 8087:80
     links:
       - db
     depends_on:
