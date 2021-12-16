@@ -4,16 +4,16 @@ of Mediawiki plugins using composer.
 ## Development
 
 * `docker-compose up`
-* Visit http://localhost:8080
+* Visit http://localhost:8087 and complete the installation wizard
 
 The database credentials are: host `db`, db `wiki`, username `wiki`, password `wiki`. Once
-you've created a config file, put it in `./data/config`.
+you've downloaded the config file, put it in `./data/config`.
 
 ## Updating
 
 If a mediawiki DB needs an upgrade:
 
-    docker exec -it <container> php /var/www/mediawiki/w/maintenance/update.php
+    docker-compose exec mediawiki php /var/www/mediawiki/w/maintenance/update.php
 
 Note that if the wiki is in read-only mode, you'll have to disable that, or you'll
 get a cryptic error.
