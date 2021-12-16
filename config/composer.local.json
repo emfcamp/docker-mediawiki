@@ -1,9 +1,9 @@
 {
     "require": {
         "mediawiki/sub-page-list": "1.6.*",
-        "mediawiki/semantic-media-wiki": "3.1.*",
-        "mediawiki/page-forms": "4.6.*",
-        "mediawiki/maps": "7.15.*",
+        "mediawiki/semantic-media-wiki": "3.2.*",
+        "mediawiki/page-forms": "5.3.*",
+        "mediawiki/maps": "9.0.*",
         "mediawiki/semantic-forms-select": "3.0.*",
         "pear/mail": "1.4.*",
         "pear/net_smtp": "*"

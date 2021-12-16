@@ -2,7 +2,7 @@ FROM php:7.4-fpm
 
 RUN apt-get update && \
     apt-get -y install apt-transport-https git curl libmagickwand-6.q16-dev imagemagick libicu-dev \
-               libpq-dev supervisor nginx cron libzip-dev gpg && \
+               libpq-dev supervisor nginx cron libzip-dev gpg unzip && \
     rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-install pgsql intl zip && \
@@ -12,8 +12,8 @@ RUN docker-php-ext-install pgsql intl zip && \
     	docker-php-ext-enable apcu --ini-name 10-docker-php-ext-apcu.ini && \
     	docker-php-ext-enable apc --ini-name 20-docker-php-ext-apc.ini
 
-ARG MEDIAWIKI_VERSION_MAJOR=1.34
-ARG MEDIAWIKI_VERSION=1.34.0
+ARG MEDIAWIKI_VERSION_MAJOR=1.35
+ARG MEDIAWIKI_VERSION=1.35.5
 
 RUN curl -s -o /tmp/keys.txt https://www.mediawiki.org/keys/keys.txt && \
     curl -s -o /tmp/mediawiki.tar.gz https://releases.wikimedia.org/mediawiki/$MEDIAWIKI_VERSION_MAJOR/mediawiki-$MEDIAWIKI_VERSION.tar.gz && \
@@ -29,7 +29,8 @@ RUN curl -s -o /tmp/keys.txt https://www.mediawiki.org/keys/keys.txt && \
     rm -rf /var/www/mediawiki/w/images && \
     ln -s /images /var/www/mediawiki/w/images
 
-RUN curl -s -o /var/www/mediawiki/w/composer.phar https://getcomposer.org/composer.phar
+#RUN curl -s -o /var/www/mediawiki/w/composer.phar https://getcomposer.org/download/latest-stable/composer.phar
+RUN curl -s -o /var/www/mediawiki/w/composer.phar https://getcomposer.org/download/latest-1.x/composer.phar
 COPY config/composer.local.json /var/www/mediawiki/w/composer.local.json
 RUN cd /var/www/mediawiki/w; php ./composer.phar update --no-dev
 
