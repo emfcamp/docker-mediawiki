@@ -2,7 +2,7 @@ FROM php:7.4-fpm
 
 RUN apt-get update && \
     apt-get -y install apt-transport-https git curl libmagickwand-6.q16-dev imagemagick libicu-dev \
-               libpq-dev supervisor nginx cron libzip-dev gpg && \
+               libpq-dev supervisor nginx cron libzip-dev gpg unzip && \
     rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-install pgsql intl zip && \
