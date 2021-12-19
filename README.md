@@ -39,6 +39,14 @@ If you're exposing the wiki under a subdirectory, set `URL_PREFIX` in `docker-co
       URL_PREFIX: /2018
 ```
 
+And update the config to:
+
+```
+$wgScriptPath = "/2018/w";
+$wgArticlePath = "/2018/wiki/$1";
+$wgUsePathInfo = true;
+```
+
 ### Email
 
 To send emails, you need to set `$wgSMTP`:
