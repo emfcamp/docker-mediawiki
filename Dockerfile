@@ -42,6 +42,7 @@ COPY config/crontab /etc/crontab
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 
 RUN ln -s /config/LocalSettings.php /var/www/mediawiki/w/LocalSettings.php
+RUN ln -s /config/smw.json /var/www/mediawiki/w/extensions/SemanticMediaWiki/.smw.json
 
 VOLUME ["/images", "/config"]
 EXPOSE 80
