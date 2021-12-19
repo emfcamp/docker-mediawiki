@@ -44,7 +44,7 @@ http {
             index index.php;
 
             location = $URL_PREFIX/ {
-                return 301 wiki/Main_Page;
+                return 301 wiki/;
             }
 
             location $URL_PREFIX/w/images {
