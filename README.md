@@ -15,7 +15,11 @@ If a mediawiki DB needs an upgrade:
 
     docker-compose exec mediawiki php /var/www/mediawiki/w/maintenance/update.php
 
-Note that if the wiki is in read-only mode, you'll have to disable that, or you'll
+And if you're using SMW, you may need to also run extra commands, e.g.:
+
+    docker-compose exec mediawiki php /var/www/mediawiki/w/extensions/SemanticMediaWiki/maintenance/updateEntityCountMap.php
+
+Note that if the wiki is in read-only mode (`$wgReadOnly`), you'll have to disable that, or you'll
 get a cryptic error.
 
 ## Config
@@ -25,12 +29,15 @@ For short URLs, the appropriate config is:
 
 ```
 $wgScriptPath = "/w";
-$wgArticlePath      = "/wiki/$1";
 $wgUsePathInfo = true;
 ```
 
-Note that short URLs don't currently work if the wiki is exposed as a subdirectory -
-in this case omit `$wgArticlePath`.
+If you're exposing the wiki under a subdirectory, set `URL_PREFIX` in `docker-compose.yml`, e.g.:
+
+```
+    environment:
+      URL_PREFIX: /2018
+```
 
 ### Email
 
