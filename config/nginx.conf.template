@@ -1,0 +1,87 @@
+user  www-data;
+worker_processes  1;
+daemon off;
+
+error_log  /proc/self/fd/2 warn;
+pid        /var/run/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /proc/self/fd/2  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    keepalive_timeout  65;
+
+    #gzip  on;
+    server {
+        listen 80;
+        server_name localhost;
+        root /var/www/mediawiki;
+        client_max_body_size 32M;
+        client_body_timeout 60;
+
+        set_real_ip_from 192.168.0.0/16;
+        set_real_ip_from 172.16.0.0/12;
+        set_real_ip_from 10.0.0.0/8;
+        real_ip_header   X-Forwarded-For;
+
+        location $URL_PREFIX/ {
+            alias /var/www/mediawiki/;
+            index index.php;
+
+            location = $URL_PREFIX/ {
+                return 301 wiki/;
+            }
+
+            location $URL_PREFIX/w/images {
+                location ~* \.php$ { return 403; }
+                location $URL_PREFIX/w/images/deleted { return 403; }
+                try_files $uri =404;
+            }
+
+            location $URL_PREFIX/wiki/ {
+                rewrite ^$URL_PREFIX/wiki/(.*)$ $URL_PREFIX/w/index.php/$1 last;
+            }
+
+            location ~ \.php(/|$) {
+                # $request_filename takes into account alias, unlike $fastcgi_script_name,
+                # but isn't affected by $fastcgi_split_path_info. So we rewrite it instead.
+                # As we're inside a location, no more locations are checked.
+                rewrite ^/(.+?\.php)(?<path_info>/.*)$ /$1;
+
+                # Examples for https://wiki-archive.emfcamp.org/2018/w/test.php/x:
+                # return 301 $fastcgi_script_name;  # /2018/w/test.php
+                # return 301 $fastcgi_path_info;    # would be /x, but is empty because we don't split
+                # return 301 $request_filename;     # /var/www/mediawiki/w/test.php
+                # return 301 $path_info;            # /x
+                # return 301 $uri;                  # /2018/w/test.php
+                # return 301 $request_uri;          # /2018/w/test.php/x
+
+                if (!-f $request_filename) {
+                    return 404;
+                }
+
+                include fastcgi_params;
+                fastcgi_param SCRIPT_FILENAME $request_filename;
+                fastcgi_param PATH_INFO $path_info;
+                fastcgi_param HTTP_PROXY "";
+
+                fastcgi_pass unix:/var/run/mediawiki.sock;
+            }
+        }
+    }
+}

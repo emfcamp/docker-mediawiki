@@ -6,6 +6,8 @@ services:
     volumes:
       - ./data/images:/images
       - ./data/config:/config
+    environment:
+      URL_PREFIX:
     ports:
       - 8087:80
     links:
