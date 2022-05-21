@@ -1,1 +1,0 @@
-*/5 * * * *     /usr/local/bin/php /var/www/mediawiki/w/maintenance/runJobs.php 2>&1 > /proc/self/fd/2
