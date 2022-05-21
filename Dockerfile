@@ -2,7 +2,7 @@ FROM php:7.4-fpm
 
 RUN apt-get update && \
     apt-get -y install apt-transport-https git curl libmagickwand-6.q16-dev imagemagick libicu-dev \
-               libpq-dev supervisor nginx cron libzip-dev gpg unzip gettext-base && \
+               libpq-dev supervisor nginx libzip-dev gpg unzip gettext-base && \
     rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-install pgsql intl zip && \
@@ -38,7 +38,6 @@ RUN cd /var/www/mediawiki/w; php ./composer.phar update --no-dev
 COPY config/php-fpm.conf /usr/local/etc/
 COPY config/supervisord.conf /etc/supervisord.conf
 COPY config/nginx.conf.template /etc/nginx/nginx.conf.template
-COPY config/crontab /etc/crontab
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 COPY mwjobrunner.sh /mwjobrunner.sh
 
