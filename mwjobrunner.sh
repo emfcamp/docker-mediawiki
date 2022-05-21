@@ -5,7 +5,7 @@ RUNJOBS=$MW_INSTALL_PATH/maintenance/runJobs.php
 echo Starting job service...
 # Wait a minute after the server starts up to give other processes time to get started
 sleep 60
-echo Started.
+echo Job service started.
 while true; do
 	# Job types that need to be run ASAP no matter how many of them are in the queue
 	# Those jobs should be very "cheap" to run

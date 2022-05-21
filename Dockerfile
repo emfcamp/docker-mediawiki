@@ -41,7 +41,6 @@ COPY config/nginx.conf.template /etc/nginx/nginx.conf.template
 COPY config/crontab /etc/crontab
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 COPY mwjobrunner.sh /mwjobrunner.sh
-RUN chmod +x /mwjobrunner.sh
 
 RUN ln -s /config/LocalSettings.php /var/www/mediawiki/w/LocalSettings.php
 RUN ln -s /config/smw.json /var/www/mediawiki/w/extensions/SemanticMediaWiki/.smw.json
