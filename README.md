@@ -7,7 +7,10 @@ of Mediawiki plugins using composer.
 * Visit http://localhost:8087 and complete the installation wizard
 
 The database credentials are: host `db`, db `wiki`, username `wiki`, password `wiki`. Once
-you've downloaded the config file, put it in `./data/config`.
+you've downloaded the config file, put it in `./data/config`, and add the following at the end:
+
+    enableSemantics( 'localhost:8087' );
+    wfLoadExtension( 'PageForms' );
 
 ## Updating
 
