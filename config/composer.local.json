@@ -1,11 +1,12 @@
 {
     "require": {
-        "mediawiki/sub-page-list": "1.6.*",
-        "mediawiki/semantic-media-wiki": "3.2.*",
-        "mediawiki/page-forms": "5.3.*",
-        "mediawiki/maps": "9.0.*",
-        "mediawiki/semantic-forms-select": "3.0.*",
-        "pear/mail": "1.4.*",
+        "wikimedia/equivset": "*",
+        "mediawiki/sub-page-list": "3.0.*",
+        "mediawiki/semantic-media-wiki": "4.1.*",
+        "mediawiki/page-forms": "5.6.*",
+        "mediawiki/maps": "10.1.*",
+        "mediawiki/semantic-forms-select": "4.0.0-beta",
+        "pear/mail": "1.5.*",
         "pear/net_smtp": "*"
     }
 }
