@@ -11,6 +11,13 @@ you've downloaded the config file, put it in `./data/config`, and add the follow
 
     enableSemantics( 'localhost:8087' );
 
+### Deployment
+
+Push a tag for the version of mediawiki you're publishing, e.g. for mediawiki 1.39.6, the tag should be
+`v1.39.6-1`.
+
+Published to ghcr.io/emfcamp/docker-mediawiki.
+
 ## Updating
 
 If a mediawiki DB needs an upgrade:
