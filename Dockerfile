@@ -2,15 +2,15 @@ FROM php:7.4-fpm
 
 RUN apt-get update && \
     apt-get -y install apt-transport-https git curl libmagickwand-6.q16-dev imagemagick libicu-dev \
-               libpq-dev supervisor nginx libzip-dev gpg unzip gettext-base && \
+    libpq-dev supervisor nginx libzip-dev gpg unzip gettext-base && \
     rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-install calendar pgsql intl zip && \
-	pecl install imagick && docker-php-ext-enable imagick && \
-	pecl install apcu && \
-    	pecl install apcu_bc-1.0.5 && \
-    	docker-php-ext-enable apcu --ini-name 10-docker-php-ext-apcu.ini && \
-    	docker-php-ext-enable apc --ini-name 20-docker-php-ext-apc.ini
+    pecl install imagick && docker-php-ext-enable imagick && \
+    pecl install apcu && \
+    pecl install apcu_bc-1.0.5 && \
+    docker-php-ext-enable apcu --ini-name 10-docker-php-ext-apcu.ini && \
+    docker-php-ext-enable apc --ini-name 20-docker-php-ext-apc.ini
 
 ARG MEDIAWIKI_VERSION_MAJOR=1.39
 ARG MEDIAWIKI_VERSION=1.39.6
@@ -33,10 +33,6 @@ RUN curl -s -o /tmp/keys.txt https://www.mediawiki.org/keys/keys.txt && \
 RUN curl -s -o /var/www/mediawiki/w/composer.phar https://getcomposer.org/download/latest-2.x/composer.phar
 COPY config/composer.local.json /var/www/mediawiki/w/composer.local.json
 RUN cd /var/www/mediawiki/w; php ./composer.phar update --no-dev
-
-# Temporarily apply https://github.com/SemanticMediaWiki/SemanticMediaWiki/pull/5518 until SMW cuts a release
-# When you remove this, you can probably also unpin mediawiki/semantic-forms-select==4.0.0-beta
-RUN cd /var/www/mediawiki/w/extensions/SemanticMediaWiki && curl -sL https://github.com/SemanticMediaWiki/SemanticMediaWiki/pull/5518.patch | git apply
 
 COPY config/php-fpm.conf /usr/local/etc/
 COPY config/supervisord.conf /etc/supervisord.conf
