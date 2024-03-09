@@ -32,7 +32,8 @@ RUN curl -s -o /tmp/keys.txt https://www.mediawiki.org/keys/keys.txt && \
 
 RUN curl -s -o /var/www/mediawiki/w/composer.phar https://getcomposer.org/download/latest-2.x/composer.phar
 COPY config/composer.local.json /var/www/mediawiki/w/composer.local.json
-RUN cd /var/www/mediawiki/w; php ./composer.phar update --no-dev
+
+RUN cd /var/www/mediawiki/w; COMPOSER_ALLOW_SUPERUSER=1 php ./composer.phar update --no-dev
 
 COPY config/php-fpm.conf /usr/local/etc/
 COPY config/supervisord.conf /etc/supervisord.conf
