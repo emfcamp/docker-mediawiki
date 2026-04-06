@@ -2,6 +2,12 @@
 
 set -e
 
-envsubst '$URL_PREFIX' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
-exec "$@"
+WIKIS="$(ls /config)"
 
+for WIKI in $WIKIS; do
+  export WIKI
+  envsubst '$WIKI' < /etc/supervisor/supervisord-wiki.conf.template > /etc/supervisor/conf.d/wiki-${WIKI}.conf
+  unset WIKI
+done
+
+exec "$@"
