@@ -14,7 +14,6 @@ RUN docker-php-ext-install calendar pgsql intl zip && \
 
 ARG MEDIAWIKI_VERSION_MAJOR=1.39
 ARG MEDIAWIKI_VERSION=1.39.6
-ARG URL_PREFIX
 
 RUN curl -s -o /tmp/keys.txt https://www.mediawiki.org/keys/keys.txt && \
     curl -s -o /tmp/mediawiki.tar.gz https://releases.wikimedia.org/mediawiki/$MEDIAWIKI_VERSION_MAJOR/mediawiki-$MEDIAWIKI_VERSION.tar.gz && \
@@ -36,15 +35,15 @@ COPY config/composer.local.json /var/www/mediawiki/w/composer.local.json
 RUN cd /var/www/mediawiki/w; COMPOSER_ALLOW_SUPERUSER=1 php ./composer.phar update --no-dev
 
 COPY config/php-fpm.conf /usr/local/etc/
-COPY config/supervisord.conf /etc/supervisord.conf
-COPY config/nginx.conf.template /etc/nginx/nginx.conf.template
-COPY docker-entrypoint.sh /docker-entrypoint.sh
+COPY config/supervisord.conf /etc/supervisor/supervisord.conf
+COPY config/supervisord-wiki.conf.template /etc/supervisor/supervisord-wiki.conf.template
+COPY config/nginx.conf /etc/nginx/nginx.conf
+COPY devinstall.sh /devinstall.sh
 COPY mwjobrunner.sh /mwjobrunner.sh
-
-RUN ln -s /config/LocalSettings.php /var/www/mediawiki/w/LocalSettings.php
-RUN ln -s /config/smw.json /var/www/mediawiki/w/extensions/SemanticMediaWiki/.smw.json
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+COPY config/LocalSettings.php /var/www/mediawiki/w/LocalSettings.php
 
 VOLUME ["/images", "/config"]
 EXPOSE 80
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
