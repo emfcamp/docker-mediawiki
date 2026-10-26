@@ -1,7 +1,7 @@
 FROM php:8.3-fpm
 
 RUN apt-get update && \
-    apt-get -y install apt-transport-https git curl libmagickwand-6.q16-dev imagemagick libicu-dev \
+    apt-get -y install apt-transport-https git curl libmagickwand-7.q16-dev imagemagick libicu-dev \
     libpq-dev supervisor nginx libzip-dev gpg unzip gettext-base && \
     rm -rf /var/lib/apt/lists/*
 
