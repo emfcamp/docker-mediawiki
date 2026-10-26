@@ -3,7 +3,7 @@
     "wikimedia/equivset": "*",
     "mediawiki/sub-page-list": "3.0.*",
     "mediawiki/semantic-media-wiki": "~6.0.0",
-    "mediawiki/page-forms": "5.6.*",
+    "mediawiki/page-forms": "6.0.*",
     "mediawiki/maps": "10.1.*",
     "mediawiki/semantic-forms-select": "4.0.0",
     "mediawiki/font-awesome": "*"
