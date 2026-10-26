@@ -1,4 +1,4 @@
-FROM php:7.4-fpm
+FROM php:8.3-fpm
 
 RUN apt-get update && \
     apt-get -y install apt-transport-https git curl libmagickwand-6.q16-dev imagemagick libicu-dev \
@@ -13,7 +13,7 @@ RUN docker-php-ext-install calendar pgsql intl zip && \
     docker-php-ext-enable apc --ini-name 20-docker-php-ext-apc.ini
 
 ARG MEDIAWIKI_VERSION_MAJOR=1.39
-ARG MEDIAWIKI_VERSION=1.39.6
+ARG MEDIAWIKI_VERSION=1.39.17
 
 RUN curl -s -o /tmp/keys.txt https://www.mediawiki.org/keys/keys.txt && \
     curl -s -o /tmp/mediawiki.tar.gz https://releases.wikimedia.org/mediawiki/$MEDIAWIKI_VERSION_MAJOR/mediawiki-$MEDIAWIKI_VERSION.tar.gz && \
