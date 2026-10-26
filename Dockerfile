@@ -10,8 +10,8 @@ RUN docker-php-ext-install calendar pgsql intl zip && \
     pecl install apcu && \
     docker-php-ext-enable apcu --ini-name 10-docker-php-ext-apcu.ini
 
-ARG MEDIAWIKI_VERSION_MAJOR=1.39
-ARG MEDIAWIKI_VERSION=1.39.17
+ARG MEDIAWIKI_VERSION_MAJOR=1.43
+ARG MEDIAWIKI_VERSION=1.43.11
 
 RUN curl -s -o /tmp/keys.txt https://www.mediawiki.org/keys/keys.txt && \
     curl -s -o /tmp/mediawiki.tar.gz https://releases.wikimedia.org/mediawiki/$MEDIAWIKI_VERSION_MAJOR/mediawiki-$MEDIAWIKI_VERSION.tar.gz && \
