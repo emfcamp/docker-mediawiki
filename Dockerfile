@@ -8,9 +8,7 @@ RUN apt-get update && \
 RUN docker-php-ext-install calendar pgsql intl zip && \
     pecl install imagick && docker-php-ext-enable imagick && \
     pecl install apcu && \
-    pecl install apcu_bc-1.0.5 && \
-    docker-php-ext-enable apcu --ini-name 10-docker-php-ext-apcu.ini && \
-    docker-php-ext-enable apc --ini-name 20-docker-php-ext-apc.ini
+    docker-php-ext-enable apcu --ini-name 10-docker-php-ext-apcu.ini
 
 ARG MEDIAWIKI_VERSION_MAJOR=1.39
 ARG MEDIAWIKI_VERSION=1.39.17
